@@ -1,0 +1,7 @@
+# files
+*.exe
+*.json
+.env
+
+#folders
+.vscode/
