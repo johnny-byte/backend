@@ -67,7 +67,7 @@ func main() {
 	// Routes
 	apiPublic.GET("/", hello)
 
-	apiPublic.GET("/job/all", jobs.GetAllVacancy(conn))
+	apiPublic.GET("/job/short/all", jobs.GetAllJobsShort(conn))
 
 	apiPublic.GET("/job/full/:uuid", jobs.GetWithUUID(conn))
 

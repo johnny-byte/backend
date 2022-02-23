@@ -8,18 +8,18 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func GetAllVacancy(conn *pg.DB) func(ctx echo.Context) error {
+func GetAllJobsShort(conn *pg.DB) func(ctx echo.Context) error {
 	return func(ctx echo.Context) error {
 		item := &models.Job{}
 		if err := ctx.Bind(item); err != nil {
 			return ctx.JSON(http.StatusBadRequest, struct{ Error string }{err.Error()})
 		}
 
-		vacancy, err := item.GetAllJobs(conn)
+		jobs, err := item.GetAllJobsShort(conn)
 		if err != nil {
 			return ctx.JSON(http.StatusBadRequest,
 				struct{ Error string }{err.Error()})
 		}
-		return ctx.JSON(http.StatusOK, vacancy)
+		return ctx.JSON(http.StatusOK, jobs)
 	}
 }

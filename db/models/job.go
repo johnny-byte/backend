@@ -8,10 +8,10 @@ import (
 
 type Job struct {
 	UUID        string `pg:"uuid,unique,pk,default:gen_random_uuid()" json:"uuid"`
-	Title       string `pg: "title" json: "title" `
-	Location    string `pg: "location" json: "location" `
-	Tag         string `pg: "tag" json: "tag"`
-	Description string `pg: "description" json: "description"`
+	Title       string `pg:"title" json:"title"`
+	Location    string `pg:"location" json:"location"`
+	Tag         string `pg:"tag" json:"tag"`
+	Description string `pg:"description" json:"description,omitempty"`
 }
 
 func (v *Job) GetAllJobs(conn *pg.DB) (*[]Job, error) {
@@ -21,6 +21,18 @@ func (v *Job) GetAllJobs(conn *pg.DB) (*[]Job, error) {
 		return nil, err
 	}
 	fmt.Printf("items: %v\n", items)
+	return items, nil
+}
+
+func (v *Job) GetAllJobsShort(conn *pg.DB) (*[]Job, error) {
+	items := &[]Job{}
+	if err := conn.Model(items).Column("uuid", "title", "location", "tag").
+		Select(); err != nil {
+		return nil, err
+	}
+	for _, job := range *items {
+		job.Description = ""
+	}
 	return items, nil
 }
 
