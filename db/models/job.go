@@ -7,6 +7,7 @@ import (
 )
 
 type Job struct {
+	UUID        string `pg:"uuid,unique,pk,default:gen_random_uuid()" json:"uuid"`
 	Title       string `pg: "title" json: "title" `
 	Location    string `pg: "location" json: "location" `
 	Tag         string `pg: "tag" json: "tag"`
