@@ -31,3 +31,11 @@ func (job *Job) Insert(conn *pg.DB) error {
 	}
 	return nil
 }
+
+func (job *Job) FindWithUUID(conn *pg.DB) error {
+	fmt.Printf("Select job: %v\n", job)
+	if err := conn.Model(job).Where("uuid = ?0", job.UUID).Select(); err != nil {
+		return err
+	}
+	return nil
+}
